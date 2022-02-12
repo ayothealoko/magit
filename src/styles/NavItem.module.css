@@ -1,0 +1,36 @@
+.container{
+    width:100%;
+    display:flex;
+    align-items: center;
+    font-size: 14px;
+    padding: 8px 0;
+    padding-left:38px;
+    box-sizing:border-box;
+}
+
+.container:hover{
+    background-color:#7E7052;
+    color:#fff;
+}
+
+.containerActive{
+    background-color:#D1CABA;
+    position:relative;
+}
+
+.design{
+    width:8px;
+    height:100%;
+    background-color:#7E7052;
+    position:absolute;
+    left:0;
+}
+
+.img{
+    width:15px;
+    height:15px;
+    margin-right: 8px;
+}
+
+
+

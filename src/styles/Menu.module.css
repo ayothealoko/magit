@@ -1,0 +1,43 @@
+.menuWrapper{
+    width:100%;
+    flex-grow:1;
+    overflow-y:scroll;
+}
+
+.contianer{
+    margin-bottom: 16px;
+}
+
+.header{
+    padding-left:38px;
+    display:flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-weight: normal;
+    color:#7E7052;
+}
+
+.header:hover{
+    text-decoration: underline;
+}
+
+.icon{
+    margin-left:8px;
+    width:10px;
+    height:10px;
+    transition: 0.15s transform ease-in;
+}
+
+.rotateIcon{
+    transform: rotate(180deg);
+}
+
+.itemContainer{
+    width:100%;
+    overflow-y:hidden;
+}
+
+.collapse{
+    max-height:0px;
+}
+
