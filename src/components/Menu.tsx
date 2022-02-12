@@ -3,7 +3,7 @@ import styles from "../styles/Menu.module.css";
 import NavItem from "./NavItem"
 
 function Menu(): JSX.Element {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
     const buffers = [
 	"main.jsx",
 	"index.js",
