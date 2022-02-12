@@ -1,9 +1,9 @@
 import React from "react";
 import "./App.css";
-import SideNav from "./components/SideNav";
+import Layout from "./components/Layout";
 
 function App() {
-  return <SideNav />;
+  return <Layout />;
 }
 
 export default App;
