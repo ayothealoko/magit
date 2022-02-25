@@ -12,7 +12,7 @@ const colors = [
 
 
 function StyledSpan({text, color, bgColor}:StyledSpanProps):JSX.Element{
-        let fontColor = "inherit";
+    let fontColor = "inherit";
     let bgFontColor = "inherit";
 
     if(color !== undefined && colors[color] !== undefined){
@@ -20,11 +20,11 @@ function StyledSpan({text, color, bgColor}:StyledSpanProps):JSX.Element{
     }
 
     if(bgColor!==undefined && colors[bgColor] !== undefined){
-	 fontColor= colors[bgColor];
+	 bgFontColor= colors[bgColor];
     }
 
     return (
-	<span style={{color: fontColor, backgroundColor: bgFontColor}}>{text}</span>
+	<span  style={{color: fontColor, backgroundColor: bgFontColor}}>{text}</span>
     );
 }
 

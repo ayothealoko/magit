@@ -1,11 +1,14 @@
+import styles from "../styles/Line.module.css";
+
 interface LineProps{
-    children:JSX.Element;
+    children:JSX.Element| React.ReactNode;
+    onClick?: (event:any)=>void;
 }
 
-function Line({children}:LineProps):JSX.Element{
+function Line({children, onClick}:LineProps):JSX.Element{
     return (
 	<>
-	   {children}
+	    <span className={styles.line} onClick={onClick}>{children}</span>
 	    <br />
 	</>
     );
