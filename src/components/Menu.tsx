@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styles from "../styles/Menu.module.css";
 import NavItem from "./NavItem"
+import {ReactComponent as file} from "../icons/file.svg";
+import FileIcon from "../icons/FileIcon";
 
 function Menu(): JSX.Element {
     const [isOpen, setIsOpen] = useState(true);
@@ -26,7 +28,7 @@ function Menu(): JSX.Element {
 		    {buffers.map((text, id) =>{
 			return (
 			    // TODO use Proper id
-		    <NavItem key={id} icon="/icons/file.svg" text={text} />);
+		    <NavItem key={id} icon={<FileIcon />} text={text} />);
 		    })}
 		    </div>
 		</div>

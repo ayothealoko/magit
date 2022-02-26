@@ -1,8 +1,8 @@
 import styles from "../styles/CollapseLine.module.css";
 import { useState } from "react";
 import Line from "./Line";
-import {ReactComponent as Icon} from "../icons/triangle.svg";
 import StyledSpan from "./StyledSpan";
+import TriangleIcon from "../icons/TriangleIcon";
 
 interface CollapseLineProps{
     head:{
@@ -48,7 +48,7 @@ function CollapseLine({head, level1}: CollapseLineProps): JSX.Element {
     return (
 	    <>
 		<Line onClick={handleClickToggle}>
-		    <Icon className={iconClass}/>
+		    <TriangleIcon className={iconClass}/>
 		    <StyledSpan {...head} />
 		</Line>
 		{level1Comp}
@@ -102,7 +102,7 @@ function Level1Collaspable({text, bgColor, color, level2}:Level1CollaspableProps
     return(
 	<>
 		<Line onClick={handleClickToggle}>
-		    <Icon className={iconClass}/>
+		    <TriangleIcon className={iconClass}/>
 		    <StyledSpan {...l1} />
 		</Line>
 		{level2Comp}
