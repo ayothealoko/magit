@@ -22,10 +22,10 @@
 }
 
 .icon{
-    margin-left:8px;
+    margin-right:8px;
     width:10px;
     height:10px;
-    transition: 0.15s transform ease-in;
+    transform: rotate(90deg);
 }
 
 .rotateIcon{

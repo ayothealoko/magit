@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styles from "../styles/Menu.module.css";
 import NavItem from "./NavItem"
-import {ReactComponent as file} from "../icons/file.svg";
 import FileIcon from "../icons/FileIcon";
+import TriangleIcon from "../icons/TriangleIcon";
 
 function Menu(): JSX.Element {
     const [isOpen, setIsOpen] = useState(true);
@@ -23,7 +23,10 @@ function Menu(): JSX.Element {
 
 	return (
 	<div className={styles.container}>
-		    <h3 className={styles.header} onClick={handleClickToggle}>diff buffers <img className={icon} src="/icons/triangle.svg" alt="" /> </h3>
+	    <h3 className={styles.header} onClick={handleClickToggle}>
+		<TriangleIcon className={icon} />
+		diff buffers
+	    </h3>
 		    <div className={itemContainer}>
 		    {buffers.map((text, id) =>{
 			return (
