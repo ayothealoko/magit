@@ -8,8 +8,8 @@ function SideNav(): JSX.Element {
 	return (
 	    <div className={styles.container}>
 		<div className={`${styles.menu} ${styles.status}`}>
-				<NavItem icon={<HomeIcon />} text="status" active={true} />
-				<NavItem icon={<ActionIcon />} text="actions" active={false} />
+				<NavItem icon={HomeIcon} text="status" active={true} />
+				<NavItem icon={ActionIcon} text="actions" active={false} />
 		</div>
 		<div className={styles.menuWrapper}>
 		    <Menu />

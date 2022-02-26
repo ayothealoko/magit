@@ -10,8 +10,9 @@
 
 .container:hover{
     background-color:#7E7052;
-    color:#fff;
+    color:#f6f6f6;
 }
+
 
 .containerActive{
     background-color:#D1CABA;
@@ -26,11 +27,15 @@
     left:0;
 }
 
-.img{
+.icon{
     width:15px;
     height:15px;
     margin-right: 8px;
+    fill:#353025;
+    stroke:#353025;
 }
 
-
-
+.container:hover .icon{
+    stroke:#D1CABA; 
+    fill:#D1CABA;
+}
