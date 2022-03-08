@@ -6,6 +6,8 @@
     padding: 8px 0;
     padding-left:38px;
     box-sizing:border-box;
+    color:#353025;
+    text-decoration:none;
 }
 
 .container:hover{
@@ -14,12 +16,12 @@
 }
 
 
-.containerActive{
+.active{
     background-color:#D1CABA;
     position:relative;
 }
 
-.design{
+.active .design{
     width:8px;
     height:100%;
     background-color:#7E7052;

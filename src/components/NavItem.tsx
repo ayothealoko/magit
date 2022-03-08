@@ -1,30 +1,25 @@
+import { Link, NavLink } from "react-router-dom";
 import styles from "../styles/NavItem.module.css";
 
 interface NavItemProp {
     icon:({className}:{className: string}) => JSX.Element;
     text:string;
-    active?: boolean;
+    link:string;
 }
 
-function NavItem({icon,text, active}: NavItemProp): JSX.Element {
+function NavItem({icon,text,link}: NavItemProp): JSX.Element {
     const Icon = icon;
     
-    if(active === true) {
 	return (
-		<div className={`${styles.container} ${styles.containerActive}`}>
+	    <NavLink to={link} className={
+	    ({isActive}) => {
+		return isActive? `${styles.container} ${styles.active}` : styles.container;
+	    }} >
 			<div className={styles.design}></div>
 			<Icon className={styles.icon} />
 			<span>{text}</span>
-	    </div>
+	    </NavLink>
 	);
-    } else {
-	return (
-		<div className={styles.container}>
-		    <Icon className={styles.icon} />
-		    <span>{text}</span>
-	    </div>
-	);
-    }
 }
 
 export default NavItem;

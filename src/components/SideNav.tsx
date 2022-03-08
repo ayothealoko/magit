@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import ActionIcon from "../icons/ActionsIcon";
 import HomeIcon from "../icons/HomeIcon";
 import styles from "../styles/SideNav.module.css";
@@ -8,15 +9,15 @@ function SideNav(): JSX.Element {
 	return (
 	    <div className={styles.container}>
 		<div className={`${styles.menu} ${styles.status}`}>
-				<NavItem icon={HomeIcon} text="status" active={true} />
-				<NavItem icon={ActionIcon} text="actions" active={false} />
+				<NavItem icon={HomeIcon} text="status"  link="/" />
+				<NavItem icon={ActionIcon} text="actions"  link="/active" />
 		</div>
 		<div className={styles.menuWrapper}>
 		    <Menu />
 				</div>
 		<footer className={styles.footer}>
 		    <h3 className={styles.footerHeader}>magit</h3>
-		    <a className={styles.footerLink} href="#">licences and credits</a>
+		    <Link className={styles.footerLink} to="#">licences and credits</Link>
 
 		</footer>
 	    </div>

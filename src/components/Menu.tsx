@@ -31,7 +31,7 @@ function Menu(): JSX.Element {
 		    {buffers.map((text, id) =>{
 			return (
 			    // TODO use Proper id
-		    <NavItem key={id} icon={FileIcon} text={text} />);
+		    <NavItem key={id} icon={FileIcon} text={text} link="buffer" />);
 		    })}
 		    </div>
 		</div>

@@ -1,6 +1,7 @@
 import {
     Routes,
     Route,
+	Navigate,
 } from "react-router-dom";
 import Status from "../routes/Status";
 import styles from "../styles/Layout.module.css";
@@ -11,8 +12,11 @@ function Layout(): JSX.Element {
 		<div className={styles.container}>
 			<aside className={styles.aside}><SideNav /></aside>
 			<Routes>
-			    <Route path="*" element={
+			    <Route path="/" element={
 				<main className={styles.main}><Status /></main>
+			    } />
+			    <Route path="*" element={
+				<Navigate to="/" />
 			    } />
 			</Routes>
 	    </div>
