@@ -1,15 +1,16 @@
-.iconOpen{
-    transform: rotate(180deg);
+.iconOpen {
+  transform: rotate(180deg);
 }
 
-.iconClosed{
-    transform: rotate(90deg);
+.iconClosed {
+  transform: rotate(90deg);
 }
 
-.iconClosed, .iconOpen{
-    position:absolute;
-    width:10px;
-    height:10px;
-    left:-1.5em;
-    top:0.25em;
+.iconClosed,
+.iconOpen {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  left: -1.5em;
+  top: 0.25em;
 }

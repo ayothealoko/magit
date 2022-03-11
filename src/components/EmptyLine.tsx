@@ -1,7 +1,5 @@
 function EmptyLine(): JSX.Element {
-	return (
-		<br />
-	);
+  return <br />;
 }
 
 export default EmptyLine;

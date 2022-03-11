@@ -4,10 +4,11 @@ import "./App.css";
 import Layout from "./components/Layout";
 
 function App() {
-	return (
+  return (
     <BrowserRouter>
-	<Layout />
-    </BrowserRouter>);
+      <Layout />
+    </BrowserRouter>
+  );
 }
 
 export default App;
