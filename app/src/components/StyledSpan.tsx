@@ -1,10 +1,10 @@
+import colors from "../colors";
+
 interface StyledSpanProps {
   text: string;
   color?: number;
   bgColor?: number;
 }
-
-const colors = ["#1788D6", "#84AF12", "#52C2B2"];
 
 function StyledSpan({ text, color, bgColor }: StyledSpanProps): JSX.Element {
   let fontColor = "inherit";

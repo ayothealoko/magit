@@ -14,3 +14,14 @@
   left: -1.5em;
   top: 0.25em;
 }
+
+.menuButton {
+  background-color: inherit;
+  border: none;
+  color: #7d6f51;
+  padding: 0;
+}
+
+.menuButton:hover {
+  text-decoration: underline;
+}

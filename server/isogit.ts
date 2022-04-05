@@ -3,21 +3,10 @@ import path from "path";
 import git from "isomorphic-git";
 import fs from "fs";
 
+// Shared types
+import { Status, StatusFile } from "server-types";
+
 const dir = path.join(process.cwd(), "../");
-
-interface StatusFile {
-  status: number[];
-  fileName: string;
-  serialize: string;
-  isDeleted?: boolean;
-}
-
-interface Status {
-  untracked: StatusFile[];
-  unstaged: StatusFile[];
-  staged: StatusFile[];
-  unmodified: StatusFile[];
-}
 
 async function status(): Promise<Status> {
   let status = await git

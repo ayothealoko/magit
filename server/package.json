@@ -10,9 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "diff": "^5.0.0",
     "express": "^4.17.3",
     "isomorphic-git": "^1.14.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "server-types": "file:../shared/server-types"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
