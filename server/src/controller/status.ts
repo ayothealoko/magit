@@ -94,11 +94,4 @@ function serialize(row: Array<String | number>): string {
   }
 }
 
-async function head() {
-  return git.currentBranch({
-    fs,
-    dir,
-  });
-}
-
-export { status, head };
+export { status };
