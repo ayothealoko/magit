@@ -1,12 +1,10 @@
 // node.js example
-import path from "path";
 import git from "isomorphic-git";
 import fs from "fs";
+import { dir } from "../utils/gitdir";
 
 // Shared types
 import { Status, StatusFile } from "server-types";
-
-const dir = path.join(process.cwd(), "../");
 
 async function status(): Promise<Status> {
   let status = await git
@@ -17,7 +15,6 @@ async function status(): Promise<Status> {
     .then((s) => {
       const files = matrixToFile(s);
       const sections = statusSections(files);
-      console.log(sections);
       return sections;
     });
 
