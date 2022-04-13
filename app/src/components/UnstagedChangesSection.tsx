@@ -5,6 +5,8 @@ import Line from "./Line";
 import SpanPadStart from "./SpanPadStart";
 import { useEffect, useState } from "react";
 import { fetchUnstagedChangesDiffs } from "../fetch";
+import StyledLine from "./StyledLine";
+import styles from "../styles/UnstagedChangesSection.module.css";
 
 interface UnstagedProps {
   data: StatusFile[];
@@ -21,7 +23,6 @@ function UnstagedChangesSection({ data }: UnstagedProps): JSX.Element {
         let diff: Record<string, FileDiff> = {};
 
         diffs.forEach((d) => (diff[d.filePath] = d));
-        console.log(diff);
         setDiffData(diff);
       });
     }
@@ -33,7 +34,11 @@ function UnstagedChangesSection({ data }: UnstagedProps): JSX.Element {
       head={<StyledSpan text={title} color={3} />}
       menu={["stage all"]}
       body={data.map((v) => (
-        <L1 data={v} diff={diffData ? diffData[v.fileName] : undefined} />
+        <L1
+          key={v.fileName}
+          data={v}
+          diff={diffData ? diffData[v.fileName] : undefined}
+        />
       ))}
     />
   );
@@ -45,7 +50,6 @@ interface L1Props {
 }
 
 function L1({ data, diff }: L1Props): JSX.Element {
-  console.log(diff);
   const { fileName } = data;
 
   let status = "modified";
@@ -102,7 +106,7 @@ function DiffElement({ diff }: DiffElementProps): JSX.Element {
 
   const isChange = (line: string): Boolean => {
     // meaning "+ " or "- "
-    if (line.length > 1 && (line[0] === "+" || line[0] === "-")) {
+    if (line.length > 0 && (line[0] === "+" || line[0] === "-")) {
       return true;
     }
     return false;
@@ -110,9 +114,9 @@ function DiffElement({ diff }: DiffElementProps): JSX.Element {
 
   const DiffHeaderEl = ({ line }: LineElProps): JSX.Element => {
     return (
-      <Line>
-        <StyledSpan text={line} />
-      </Line>
+      <StyledLine color={4} backgroundColor={5}>
+        {line}
+      </StyledLine>
     );
   };
 
@@ -122,6 +126,7 @@ function DiffElement({ diff }: DiffElementProps): JSX.Element {
 
   const DiffChangeEl = ({ line }: LineElProps): JSX.Element => {
     const first = line[0];
+    let text = line.slice(1);
     let isChange = false;
 
     if (first === "+" || first === "-") {
@@ -129,10 +134,19 @@ function DiffElement({ diff }: DiffElementProps): JSX.Element {
     }
 
     if (isChange) {
+      if (first === "+") {
+        return (
+          <StyledLine color={9} backgroundColor={8}>
+            <span className={styles.indicator}>{first}</span>
+            <span className={styles.line}>{text}</span>
+          </StyledLine>
+        );
+      }
       return (
-        <Line>
-          <StyledSpan text={line} />
-        </Line>
+        <StyledLine color={7} backgroundColor={6}>
+          <span className={styles.indicator}>{first}</span>
+          <span className={styles.line}>{text}</span>
+        </StyledLine>
       );
     }
 

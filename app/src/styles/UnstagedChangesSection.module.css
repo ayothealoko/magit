@@ -1,0 +1,8 @@
+.indicator {
+  position: absolute;
+  left: -1.5em;
+}
+
+.line {
+  display: inline-block;
+}

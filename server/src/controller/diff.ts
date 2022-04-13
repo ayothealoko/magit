@@ -10,7 +10,7 @@ export async function unstagedChanges(
   // stores all difs of FILES
   let diffFiles = await getFileContents(gitDir, files);
   let diffArr = diffFiles.map((v) => {
-    const [workDirFile, stagedFile] = v.content;
+    const [stagedFile, workDirFile] = v.content;
     let diffText = createTwoFilesPatch("old", "new", stagedFile, workDirFile);
     diffText = diffText.split("\n").slice(3).join("\n");
     const diff: FileDiff = {

@@ -1,4 +1,4 @@
-import colors from "../colors";
+import { getColor } from "../colors";
 
 interface StyledSpanProps {
   text: string;
@@ -7,16 +7,8 @@ interface StyledSpanProps {
 }
 
 function StyledSpan({ text, color, bgColor }: StyledSpanProps): JSX.Element {
-  let fontColor = "inherit";
-  let bgFontColor = "inherit";
-
-  if (color !== undefined && colors[color] !== undefined) {
-    fontColor = colors[color];
-  }
-
-  if (bgColor !== undefined && colors[bgColor] !== undefined) {
-    bgFontColor = colors[bgColor];
-  }
+  const fontColor = getColor(color);
+  const bgFontColor = getColor(bgColor);
 
   return (
     <span style={{ color: fontColor, backgroundColor: bgFontColor }}>
