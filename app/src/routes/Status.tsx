@@ -1,6 +1,6 @@
 import styles from "../styles/Status.module.css";
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../hooks";
+import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { selectSections, fetchSections } from "../slices/statusSlice";
 import StatusP from "../components/StatusP";
 
@@ -12,7 +12,7 @@ function Status(): JSX.Element {
     if (sections.status === "idle") {
       dispatch(fetchSections());
     }
-  }, [sections.status, dispatch]);
+  }, [sections]);
 
   return (
     <div className={styles.container}>

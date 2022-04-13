@@ -17,6 +17,7 @@ router.get("/status", (_, res) => {
 
 router.post("/unstaged-changes", (req, res) => {
   let files = req.body.files;
+  console.log(files);
   unstagedChanges(dir, files)
     .then((s) => {
       res.send(s);

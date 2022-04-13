@@ -11,3 +11,8 @@ export interface Status {
   staged: StatusFile[];
   unmodified: StatusFile[];
 }
+
+export interface FileDiff {
+  filePath: string;
+  diff: string;
+}

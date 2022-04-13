@@ -1,6 +1,7 @@
 import git, { WalkerEntry } from "isomorphic-git";
 import { createTwoFilesPatch } from "diff";
 import fs from "fs";
+import { FileDiff } from "server-types";
 
 export async function unstagedChanges(
   gitDir: string,
@@ -10,20 +11,17 @@ export async function unstagedChanges(
   let diffFiles = await getFileContents(gitDir, files);
   let diffArr = diffFiles.map((v) => {
     const [workDirFile, stagedFile] = v.content;
+    let diffText = createTwoFilesPatch("old", "new", stagedFile, workDirFile);
+    diffText = diffText.split("\n").slice(3).join("\n");
     const diff: FileDiff = {
       filePath: v.filePath,
-      diff: createTwoFilesPatch("old", "new", stagedFile, workDirFile),
+      diff: diffText,
     };
 
     return diff;
   });
 
   return diffArr;
-}
-
-interface FileDiff {
-  filePath: string;
-  diff: string;
 }
 
 interface DiffFileSource {
