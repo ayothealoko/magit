@@ -57,14 +57,11 @@ function Menu({ menu }: MenuProps): JSX.Element {
       </button>
     );
     el.push(button);
-    el.push(" | ");
+    if (i < menu.length - 1) {
+      el.push(" | ");
+    }
   }
 
-  el.push(
-    <button key="more" className={styles.menuButton}>
-      more...
-    </button>
-  );
   return <Line>{el}</Line>;
 }
 
