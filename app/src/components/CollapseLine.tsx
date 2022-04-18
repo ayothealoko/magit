@@ -51,12 +51,20 @@ function Menu({ menu }: MenuProps): JSX.Element {
 
   // add "|" in between menu buttons
   for (let i = 0; i < menu.length; i++) {
-    const button = <button className={styles.menuButton}>{menu[i]}</button>;
+    const button = (
+      <button key={menu[i]} className={styles.menuButton}>
+        {menu[i]}
+      </button>
+    );
     el.push(button);
     el.push(" | ");
   }
 
-  el.push(<button className={styles.menuButton}>more...</button>);
+  el.push(
+    <button key="more" className={styles.menuButton}>
+      more...
+    </button>
+  );
   return <Line>{el}</Line>;
 }
 

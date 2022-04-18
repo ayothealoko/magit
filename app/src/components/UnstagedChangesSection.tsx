@@ -153,16 +153,16 @@ function DiffElement({ diff }: DiffElementProps): JSX.Element {
     return <DiffLineEl line={line} />;
   };
 
-  const view = text.map((v: string): JSX.Element => {
+  const view = text.map((v: string, i: number): JSX.Element => {
     if (isHeader(v)) {
-      return <DiffHeaderEl line={v} />;
+      return <DiffHeaderEl key={i} line={v} />;
     }
 
     if (isChange(v)) {
-      return <DiffChangeEl line={v} />;
+      return <DiffChangeEl key={i} line={v} />;
     }
 
-    return <DiffLineEl line={v} />;
+    return <DiffLineEl key={i} line={v} />;
   });
   return <>{view}</>;
 }
