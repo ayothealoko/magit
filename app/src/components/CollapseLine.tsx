@@ -6,7 +6,7 @@ import TriangleIcon from "../icons/TriangleIcon";
 interface CollapseLineProps {
   head: JSX.Element;
   body: JSX.Element | JSX.Element[];
-  menu?: string[];
+  menu?: MenuProps;
 }
 function CollapseLine({ head, body, menu }: CollapseLineProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +27,7 @@ function CollapseLine({ head, body, menu }: CollapseLineProps): JSX.Element {
 
   let menuEl = null;
   if (menu !== undefined) {
-    menuEl = <Menu menu={menu} />;
+    menuEl = <Menu menu={menu.menu} handlers={menu.handlers} />;
   }
 
   return (
@@ -42,17 +42,18 @@ function CollapseLine({ head, body, menu }: CollapseLineProps): JSX.Element {
   );
 }
 
-interface MenuProps {
+export interface MenuProps {
   menu: string[];
+  handlers: ((e: React.MouseEvent<HTMLButtonElement>) => void)[];
 }
 
-function Menu({ menu }: MenuProps): JSX.Element {
+function Menu({ menu, handlers }: MenuProps): JSX.Element {
   let el = [];
 
   // add "|" in between menu buttons
   for (let i = 0; i < menu.length; i++) {
     const button = (
-      <button key={menu[i]} className={styles.menuButton}>
+      <button key={menu[i]} className={styles.menuButton} onClick={handlers[i]}>
         {menu[i]}
       </button>
     );

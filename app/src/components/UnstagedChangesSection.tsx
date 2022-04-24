@@ -1,5 +1,5 @@
 import { FileDiff, StatusFile } from "server-types";
-import CollapseLine from "./CollapseLine";
+import CollapseLine, { MenuProps } from "./CollapseLine";
 import StyledSpan from "./StyledSpan";
 import Line from "./Line";
 import SpanPadStart from "./SpanPadStart";
@@ -32,7 +32,14 @@ function UnstagedChangesSection({ data }: UnstagedProps): JSX.Element {
   return (
     <CollapseLine
       head={<StyledSpan text={title} color={3} />}
-      menu={["stage all"]}
+      menu={{
+        menu: ["stage all"],
+        handlers: [
+          (e) => {
+            console.log(e);
+          },
+        ],
+      }}
       body={data.map((v) => (
         <L1
           key={v.fileName}
@@ -53,10 +60,28 @@ function L1({ data, diff }: L1Props): JSX.Element {
   const { fileName } = data;
 
   let status = "modified";
-  let menu = ["stage"];
+  let menu: MenuProps = {
+    menu: ["stage"],
+    handlers: [
+      (e) => {
+        console.log(e);
+      },
+    ],
+  };
+
   if (data.isDeleted) {
     status = "deleted";
-    menu = ["stage", "recover"];
+    menu = {
+      menu: ["stage", "recover"],
+      handlers: [
+        (e) => {
+          console.log(e);
+        },
+        (e) => {
+          console.log(e);
+        },
+      ],
+    };
   }
 
   const headEl = (
