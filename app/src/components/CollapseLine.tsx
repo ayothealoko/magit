@@ -47,7 +47,7 @@ export interface MenuProps {
   handlers: ((e: React.MouseEvent<HTMLButtonElement>) => void)[];
 }
 
-function Menu({ menu, handlers }: MenuProps): JSX.Element {
+export function Menu({ menu, handlers }: MenuProps): JSX.Element {
   let el = [];
 
   // add "|" in between menu buttons
