@@ -37,30 +37,35 @@ function matrixToFile(
   return ans;
 }
 
+type SectionType = "unmodified" | "unstaged" | "staged" | "untracked";
+
 interface StatusField {
-  section: "unmodified" | "unstaged" | "staged" | "untracked";
+  section: SectionType | SectionType[];
   isDeleted?: boolean;
 }
 
 const statusRecord: Record<string, StatusField> = {
   "000": { section: "unmodified" },
   "020": { section: "untracked" },
-  "022": { section: "staged" },
   "103": { section: "untracked", isDeleted: true },
   "110": { section: "unmodified" },
   // figure out if true
   "111": { section: "unmodified" },
-  "122": { section: "staged" },
 
-  //unstaged changes
   //added, staged, with unstaged changes
-  "023": { section: "unstaged" },
+  "023": { section: ["unstaged", "staged"] },
   //modified, staged, with unstaged changes
-  "123": { section: "unstaged" },
+  "123": { section: ["unstaged", "staged"] },
   //modified, unstaged
   "121": { section: "unstaged" },
   //deleted, unstaged
   "101": { section: "unstaged", isDeleted: true },
+  //added, staged
+  "022": { section: "staged" },
+  //modified, staged
+  "122": { section: "staged" },
+  //deleted, staged
+  "100": { section: "staged", isDeleted: true },
 };
 
 function statusSections(files: StatusFile[]): Status {
@@ -77,8 +82,16 @@ function statusSections(files: StatusFile[]): Status {
       v.isDeleted = true;
     }
 
-    if (section.section in status) {
-      status[section.section].push(v);
+    if (Array.isArray(section.section)) {
+      section.section.forEach((s) => {
+        if (s in status) {
+          status[s].push(v);
+        }
+      });
+    } else {
+      if (section.section in status) {
+        status[section.section].push(v);
+      }
     }
   });
 

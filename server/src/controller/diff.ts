@@ -8,10 +8,27 @@ export async function unstagedChanges(
   files: string[]
 ): Promise<FileDiff[]> {
   // stores all difs of FILES
-  let diffFiles = await getFileContents(gitDir, files);
+  let diffFiles = await getUnstagedChangesDiffFiles(gitDir, files);
+  let diffArr = diff2Files(diffFiles);
+
+  return diffArr;
+}
+
+export async function stagedChanges(
+  gitDir: string,
+  files: string[]
+): Promise<FileDiff[]> {
+  // stores all difs of FILES
+  let diffFiles = await getStagedChangesDiffFiles(gitDir, files);
+  let diffArr = diff2Files(diffFiles);
+
+  return diffArr;
+}
+
+function diff2Files(diffFiles: DiffFileSource[]): FileDiff[] {
   let diffArr = diffFiles.map((v) => {
-    const [stagedFile, workDirFile] = v.content;
-    let diffText = createTwoFilesPatch("old", "new", stagedFile, workDirFile);
+    const [old, newF] = v.content;
+    let diffText = createTwoFilesPatch("old", "new", old, newF);
     diffText = diffText.split("\n").slice(3).join("\n");
     const diff: FileDiff = {
       filePath: v.filePath,
@@ -29,7 +46,7 @@ interface DiffFileSource {
   content: [string, string];
 }
 
-export async function getFileContents(
+export async function getUnstagedChangesDiffFiles(
   gitDir: string,
   stagedFilePaths: string[]
 ): Promise<DiffFileSource[]> {
@@ -63,6 +80,39 @@ export async function getFileContents(
     fs,
     dir: gitDir,
     trees: [git.STAGE(), git.WORKDIR()],
+    map,
+  });
+}
+
+export async function getStagedChangesDiffFiles(
+  gitDir: string,
+  stagedFilePaths: string[]
+): Promise<DiffFileSource[]> {
+  const map = async (filePath: string, [S, H]: (WalkerEntry | null)[]) => {
+    let stagedContent: string = "";
+    let headContent: string = "";
+
+    if (stagedFilePaths.includes(filePath)) {
+      if (S !== null) {
+        stagedContent = await readContentsFromHash(await S.oid(), gitDir);
+      }
+
+      if (H !== null) {
+        headContent = await readContentsFromHash(await H.oid(), gitDir);
+      }
+
+      let final: DiffFileSource = {
+        filePath: filePath,
+        content: [headContent, stagedContent],
+      };
+      return final;
+    }
+  };
+
+  return await git.walk({
+    fs,
+    dir: gitDir,
+    trees: [git.STAGE(), git.TREE({ ref: "HEAD" })],
     map,
   });
 }

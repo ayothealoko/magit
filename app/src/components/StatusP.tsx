@@ -2,34 +2,21 @@ import styles from "../styles/StatusP.module.css";
 import EmptyLine from "./EmptyLine";
 import StatusHead from "./StatusHead";
 import UnstagedChangesSection from "./UnstagedChangesSection";
-import { FileDiff, Status } from "server-types";
+import { Status } from "server-types";
 import StashesSection from "./StashesSection";
-import { useEffect, useState } from "react";
-import { fetchUnstagedChangesDiffs } from "../fetch";
+import StagedChangesSection from "./StagedChangesSection";
+import useUnstagedChangesDiffs from "../hooks/useUnstagedChangesDiffs";
+import useStagedChangesDiffs from "../hooks/useStagedChangesDiffs";
 
 interface StatusPProps {
   sections: Status;
 }
 
 function StatusP({ sections }: StatusPProps): JSX.Element {
-  const [diffData, setDiffData] = useState<
-    Record<string, FileDiff> | undefined
-  >();
-
-  const statusFiles = sections.unstaged;
-
-  useEffect(() => {
-    if (diffData === undefined && statusFiles.length !== 0) {
-      fetchUnstagedChangesDiffs(statusFiles.map((v) => v.fileName)).then(
-        (diffs) => {
-          let diff: Record<string, FileDiff> = {};
-
-          diffs.forEach((d) => (diff[d.filePath] = d));
-          setDiffData(diff);
-        }
-      );
-    }
-  }, [diffData, statusFiles]);
+  const unstaged = sections.unstaged;
+  const staged = sections.staged;
+  const unstagedDiffData = useUnstagedChangesDiffs(unstaged);
+  const stagedDiffData = useStagedChangesDiffs(staged);
 
   return (
     <p className={styles.container}>
@@ -37,7 +24,11 @@ function StatusP({ sections }: StatusPProps): JSX.Element {
       <EmptyLine />
       <UnstagedChangesSection
         statusFiles={sections.unstaged}
-        diffData={diffData}
+        diffData={unstagedDiffData}
+      />
+      <StagedChangesSection
+        statusFiles={sections.staged}
+        diffData={stagedDiffData}
       />
       <StashesSection
         data={[
