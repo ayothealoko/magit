@@ -1,195 +1,99 @@
 import { FileDiff, StatusFile } from "server-types";
-import CollapseLine, { MenuProps } from "./CollapseLine";
-import StyledSpan from "./StyledSpan";
-import Line from "./Line";
-import SpanPadStart from "./SpanPadStart";
-import { useEffect, useState } from "react";
-import { fetchUnstagedChangesDiffs } from "../fetch";
-import StyledLine from "./StyledLine";
-import styles from "../styles/UnstagedChangesSection.module.css";
+import { MenuProps } from "./CollapseLine";
+import ChangesSection from "./ChangesSection";
 
 interface UnstagedProps {
-  data: StatusFile[];
+  statusFiles: StatusFile[];
+  diffData?: Record<string, FileDiff>;
 }
 
-function UnstagedChangesSection({ data }: UnstagedProps): JSX.Element {
-  const [diffData, setDiffData] = useState<Record<string, FileDiff> | null>(
-    null
-  );
+function UnstagedChangesSection({
+  statusFiles,
+  diffData,
+}: UnstagedProps): JSX.Element {
+  /* useEffect(() => {
+*   if (diffData === null && statusFiles.length !== 0) {
+*     fetchUnstagedChangesDiffs(statusFiles.map((v) => v.fileName)).then((diffs) => {
+*       let diff: Record<string, FileDiff> = {};
 
-  useEffect(() => {
-    if (diffData === null && data.length !== 0) {
-      fetchUnstagedChangesDiffs(data.map((v) => v.fileName)).then((diffs) => {
-        let diff: Record<string, FileDiff> = {};
+*       diffs.forEach((d) => (diff[d.filePath] = d));
+*       setDiffData(diff);
+*     });
+*   }
+* }, [diffData, statusFiles]);
+ */
 
-        diffs.forEach((d) => (diff[d.filePath] = d));
-        setDiffData(diff);
-      });
-    }
-  }, [diffData, data]);
-
-  const title = `Unstaged changes (${data.length})`;
-  return (
-    <CollapseLine
-      head={<StyledSpan text={title} color={3} />}
-      menu={{
-        menu: ["stage all"],
-        handlers: [
-          (e) => {
-            console.log(e);
-          },
-        ],
-      }}
-      body={data.map((v) => (
-        <L1
-          key={v.fileName}
-          data={v}
-          diff={diffData ? diffData[v.fileName] : undefined}
-        />
-      ))}
-    />
-  );
-}
-
-interface L1Props {
-  data: StatusFile;
-  diff?: FileDiff;
-}
-
-function L1({ data, diff }: L1Props): JSX.Element {
-  const { fileName } = data;
-
-  let status = "modified";
-  let menu: MenuProps = {
-    menu: ["stage"],
+  const sectionTitle = "Unstaged changes";
+  const status = statusFiles.map(provideStatus);
+  // top menu
+  const menu1: MenuProps = {
+    menu: ["stage all"],
     handlers: [
       (e) => {
-        console.log(e);
+        console.log("stage all");
       },
     ],
   };
 
-  if (data.isDeleted) {
-    status = "deleted";
-    menu = {
-      menu: ["stage", "recover"],
+  // level 1 menu
+  const menu2: MenuProps[] = [
+    {
+      menu: ["stage"],
       handlers: [
-        (e) => {
-          console.log(e);
-        },
-        (e) => {
-          console.log(e);
+        () => {
+          console.log("stage");
         },
       ],
-    };
-  }
+    },
+    {
+      menu: ["stage", "restore"],
+      handlers: [
+        () => {
+          console.log("stage");
+        },
+        () => {
+          console.log("restore");
+        },
+      ],
+    },
+  ];
 
-  const headEl = (
-    <span>
-      <SpanPadStart text={status} pad={10} /> <StyledSpan text={fileName} />
-    </span>
-  );
-
-  let diffEl = <Line> </Line>;
-  if (diff !== undefined) {
-    diffEl = <DiffElement diff={diff} />;
-  }
-
-  return (
-    <>
-      <CollapseLine head={headEl} menu={menu} body={diffEl} />
-    </>
-  );
-}
-
-interface DiffElementProps {
-  diff: FileDiff;
-}
-
-function DiffElement({ diff }: DiffElementProps): JSX.Element {
-  let text = diff.diff.split("\n");
-
-  const isHeader = (line: string): Boolean => {
-    const length = line.length;
-
-    // meaning "@@ @@"
-    if (
-      length > 5 &&
-      line[0] === "@" &&
-      line[1] === "@" &&
-      line[length - 2] === "@" &&
-      line[length - 1] === "@"
-    ) {
-      return true;
+  const menu2Index = status.map((x) => {
+    if (x === "deleted") {
+      return 1;
+    } else {
+      return 0;
     }
-    return false;
-  };
-
-  interface LineElProps {
-    line: string;
-  }
-
-  const isChange = (line: string): Boolean => {
-    // meaning "+ " or "- "
-    if (line.length > 0 && (line[0] === "+" || line[0] === "-")) {
-      return true;
-    }
-    return false;
-  };
-
-  const DiffHeaderEl = ({ line }: LineElProps): JSX.Element => {
-    return (
-      <StyledLine color={4} backgroundColor={5}>
-        {line}
-      </StyledLine>
-    );
-  };
-
-  const DiffLineEl = ({ line }: LineElProps): JSX.Element => {
-    return <Line>{line}</Line>;
-  };
-
-  const DiffChangeEl = ({ line }: LineElProps): JSX.Element => {
-    const first = line[0];
-    let text = line.slice(1);
-    let isChange = false;
-
-    if (first === "+" || first === "-") {
-      isChange = true;
-    }
-
-    if (isChange) {
-      if (first === "+") {
-        return (
-          <StyledLine color={9} backgroundColor={8}>
-            <span className={styles.indicator}>{first}</span>
-            <span className={styles.line}>{text}</span>
-          </StyledLine>
-        );
-      }
-      return (
-        <StyledLine color={7} backgroundColor={6}>
-          <span className={styles.indicator}>{first}</span>
-          <span className={styles.line}>{text}</span>
-        </StyledLine>
-      );
-    }
-
-    return <DiffLineEl line={line} />;
-  };
-
-  const view = text.map((v: string, i: number): JSX.Element => {
-    if (isHeader(v)) {
-      return <DiffHeaderEl key={i} line={v} />;
-    }
-
-    if (isChange(v)) {
-      return <DiffChangeEl key={i} line={v} />;
-    }
-
-    return <DiffLineEl key={i} line={v} />;
   });
-  return <>{view}</>;
+
+  const props = {
+    sectionTitle,
+    statusFiles,
+    menu1,
+    menu2,
+    status,
+    diffData,
+    menu2Index,
+  };
+
+  return <ChangesSection {...props} />;
 }
+
+const provideStatus = (file: StatusFile): string => {
+  const states: Record<string, string> = {
+    //added, staged, with unstaged changes
+    "023": "modified",
+    //modified, staged, with unstaged changes
+    "123": "modified",
+    //modified, unstaged
+    "121": "modified",
+    //deleted, unstaged
+    "101": "deleted",
+  };
+
+  let status = states[file.serialize];
+
+  return status ? status : "";
+};
 
 export default UnstagedChangesSection;
