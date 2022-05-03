@@ -8,16 +8,25 @@ function useUnstagedChangesDiffs(statusFiles: StatusFile[]) {
   >();
 
   useEffect(() => {
+    // sentinel to cancel async request
+    let isSuscribed = true;
+
     if (unstagedDiffData === undefined && statusFiles.length !== 0) {
       fetchUnstagedChangesDiffs(statusFiles.map((v) => v.fileName)).then(
         (diffs) => {
-          let diff: Record<string, FileDiff> = {};
+          if (isSuscribed) {
+            let diff: Record<string, FileDiff> = {};
 
-          diffs.forEach((d) => (diff[d.filePath] = d));
-          setDiffData(diff);
+            diffs.forEach((d) => (diff[d.filePath] = d));
+            setDiffData(diff);
+          }
         }
       );
     }
+
+    return () => {
+      isSuscribed = false;
+    };
   }, [unstagedDiffData, statusFiles]);
 
   return unstagedDiffData;
