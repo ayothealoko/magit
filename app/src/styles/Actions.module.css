@@ -1,0 +1,21 @@
+.container {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 100px;
+  box-sizing: border-box;
+  background-color: #fffdf7;
+  padding-top: 24px;
+  padding-left: 80px;
+  font-size: 12px;
+}
+
+.header {
+  /* will cause margin collapse if not set */
+  margin-top: 0;
+  margin-bottom: 4px;
+  color: #353025;
+  font-weight: 500; /* medium */
+  font-size: 48px;
+}

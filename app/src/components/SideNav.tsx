@@ -10,7 +10,7 @@ function SideNav(): JSX.Element {
     <div className={styles.container}>
       <div className={`${styles.menu} ${styles.status}`}>
         <NavItem icon={HomeIcon} text="status" link="/" />
-        <NavItem icon={ActionIcon} text="actions" link="/active" />
+        <NavItem icon={ActionIcon} text="actions" link="/actions" />
       </div>
       <div className={styles.menuWrapper}>
         <Menu />
