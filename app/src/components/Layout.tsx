@@ -26,7 +26,9 @@ function Layout(): JSX.Element {
               <Actions />
             </main>
           }
-        />
+        >
+          <Route index element={<h1>Hi</h1>} />
+        </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>
