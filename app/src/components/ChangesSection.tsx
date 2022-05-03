@@ -116,7 +116,11 @@ function DiffElement({ diff }: DiffElementProps): JSX.Element {
   };
 
   const DiffLineEl = ({ line }: LineElProps): JSX.Element => {
-    return <Line>{line}</Line>;
+    return (
+      <Line>
+        <pre className={styles.preLine}>{line}</pre>
+      </Line>
+    );
   };
 
   const DiffChangeEl = ({ line }: LineElProps): JSX.Element => {
@@ -133,14 +137,14 @@ function DiffElement({ diff }: DiffElementProps): JSX.Element {
         return (
           <StyledLine color={9} backgroundColor={8}>
             <span className={styles.indicator}>{first}</span>
-            <span className={styles.line}>{text}</span>
+            <pre className={styles.preLine}>{text}</pre>
           </StyledLine>
         );
       }
       return (
         <StyledLine color={7} backgroundColor={6}>
           <span className={styles.indicator}>{first}</span>
-          <span className={styles.line}>{text}</span>
+          <pre className={styles.preLine}>{text}</pre>
         </StyledLine>
       );
     }
