@@ -45,27 +45,24 @@ interface StatusField {
 }
 
 const statusRecord: Record<string, StatusField> = {
-  "000": { section: "unmodified" },
-  "020": { section: "untracked" },
-  "103": { section: "untracked", isDeleted: true },
-  "110": { section: "unmodified" },
-  // figure out if true
-  "111": { section: "unmodified" },
-
-  //added, staged, with unstaged changes
+  // added, staged, with unstaged changes
   "023": { section: ["unstaged", "staged"] },
-  //modified, staged, with unstaged changes
+  // modified, staged, with unstaged changes
   "123": { section: ["unstaged", "staged"] },
-  //modified, unstaged
+  // modified, unstaged
   "121": { section: "unstaged" },
-  //deleted, unstaged
+  // deleted, unstaged
   "101": { section: "unstaged", isDeleted: true },
-  //added, staged
+  // added, staged
   "022": { section: "staged" },
-  //modified, staged
+  // modified, staged
   "122": { section: "staged" },
-  //deleted, staged
+  // deleted, staged
   "100": { section: "staged", isDeleted: true },
+  // new, untracked
+  "020": { section: "untracked" },
+  // unmodified
+  "111": { section: "unmodified" },
 };
 
 function statusSections(files: StatusFile[]): Status {

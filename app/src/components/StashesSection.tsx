@@ -1,4 +1,4 @@
-import CollapseLine, { Menu, MenuProps } from "./CollapseLine";
+import CollapseLine, { Menu } from "./CollapseLine";
 import StyledSpan from "./StyledSpan";
 import Line from "./Line";
 import SpanPadStart from "./SpanPadStart";

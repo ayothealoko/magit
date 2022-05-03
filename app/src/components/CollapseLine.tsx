@@ -8,6 +8,7 @@ interface CollapseLineProps {
   body: JSX.Element | JSX.Element[];
   menu?: MenuProps;
 }
+
 function CollapseLine({ head, body, menu }: CollapseLineProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
   const handleClickToggle = () => {

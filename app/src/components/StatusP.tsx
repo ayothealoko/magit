@@ -7,6 +7,7 @@ import StashesSection from "./StashesSection";
 import StagedChangesSection from "./StagedChangesSection";
 import useUnstagedChangesDiffs from "../hooks/useUnstagedChangesDiffs";
 import useStagedChangesDiffs from "../hooks/useStagedChangesDiffs";
+import UntrackedFilesSection from "./UntrackedFilesSection";
 
 interface StatusPProps {
   sections: Status;
@@ -15,28 +16,27 @@ interface StatusPProps {
 function StatusP({ sections }: StatusPProps): JSX.Element {
   const unstaged = sections.unstaged;
   const staged = sections.staged;
+  const untracked = sections.untracked;
   const unstagedDiffData = useUnstagedChangesDiffs(unstaged);
   const stagedDiffData = useStagedChangesDiffs(staged);
 
   return (
-    <p className={styles.container}>
+    <div className={styles.container}>
       <StatusHead />
       <EmptyLine />
       <UnstagedChangesSection
-        statusFiles={sections.unstaged}
+        statusFiles={unstaged}
         diffData={unstagedDiffData}
       />
-      <StagedChangesSection
-        statusFiles={sections.staged}
-        diffData={stagedDiffData}
-      />
+      <StagedChangesSection statusFiles={staged} diffData={stagedDiffData} />
       <StashesSection
         data={[
           { index: 0, title: "Fix issue 4" },
           { index: 1, title: "Replace jsx" },
         ]}
       />
-    </p>
+      <UntrackedFilesSection statusFiles={untracked} />
+    </div>
   );
 }
 
