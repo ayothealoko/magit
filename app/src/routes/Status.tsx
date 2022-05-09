@@ -12,7 +12,7 @@ function Status(): JSX.Element {
     if (sections.status === "idle") {
       dispatch(fetchSections());
     }
-  }, [sections]);
+  }, [sections, dispatch]);
 
   return (
     <div className={styles.container}>
