@@ -17,7 +17,7 @@ function CollapseLine({ head, body, menu }: CollapseLineProps): JSX.Element {
 
   let iconClass = styles.iconClosed;
 
-  if (isOpen == true) {
+  if (isOpen === true) {
     iconClass = styles.iconOpen;
   }
 
