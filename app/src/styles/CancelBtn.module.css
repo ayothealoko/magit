@@ -1,0 +1,12 @@
+.cancelBtn {
+  font-size: 1rem;
+  padding: 0.5em;
+  border: 2px #7d6f51 solid;
+  border-radius: 0;
+  background-color: inherit;
+}
+
+.cancelBtn:hover {
+  color: #fff;
+  background-color: #7d6f51;
+}

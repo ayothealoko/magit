@@ -7,23 +7,13 @@ function ActionMenu(): JSX.Element {
   return (
     <div className={styles.container}>
       <div className={styles.nav}>
-        <NavItem key="branch" icon={FileIcon} text="branch" link="/actions" />
-        <NavItem key="push" icon={FileIcon} text="push" link="/actions/push" />
-        <NavItem key="pull" icon={FileIcon} text="pull" link="/actions/pull" />
-        <NavItem
-          key="commit"
-          icon={FileIcon}
-          text="commit"
-          link="/actions/commit"
-        />
-        <NavItem
-          key="merge"
-          icon={FileIcon}
-          text="merge"
-          link="/actions/merge"
-        />
+        <NavItem key="branch" icon={FileIcon} text="branch" link="branch" />
+        <NavItem key="push" icon={FileIcon} text="push" link="push" />
+        <NavItem key="pull" icon={FileIcon} text="pull" link="pull" />
+        <NavItem key="commit" icon={FileIcon} text="commit" link="commit" />
+        <NavItem key="merge" icon={FileIcon} text="merge" link="merge" />
       </div>
-      <div>
+      <div className={styles.main}>
         <Outlet />
       </div>
     </div>
